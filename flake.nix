@@ -10,13 +10,31 @@
     };
   };
 
-  outputs = inputs: {
-    nixosConfigurations.example-desktop = inputs.dendritic.lib.mkDendriticHost {
-      hostname = "example-desktop";
-      username = "alice";
-      hostModule = ./hosts/example-desktop;
-      homeModule = ./home/alice/home.nix;
-      profile = inputs.dendritic.nixosModules.desktop-nvidia;
+  outputs = inputs:
+    let
+      system = "x86_64-linux";
+
+      installerSystem = inputs.nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma6.nix"
+          inputs.dendritic.nixosModules.installer
+        ];
+      };
+    in
+    {
+      nixosConfigurations = {
+        example-desktop = inputs.dendritic.lib.mkDendriticHost {
+          hostname = "example-desktop";
+          username = "alice";
+          hostModule = ./hosts/example-desktop;
+          homeModule = ./home/alice/home.nix;
+          profile = inputs.dendritic.nixosModules.desktop-nvidia;
+        };
+
+        installer = installerSystem;
+      };
+
+      packages.${system}.installer-iso = installerSystem.config.system.build.isoImage;
     };
-  };
 }

@@ -11,11 +11,11 @@
         "plasma-manager": "plasma-manager"
       },
       "locked": {
-        "lastModified": 1777220262,
-        "narHash": "sha256-o/h0jOMheHYMy/hXO1inYFFbd+7O23DIjgH85KvJtoY=",
+        "lastModified": 1777220809,
+        "narHash": "sha256-nNupP9ON/fDEh771TPe8PBZeA4uHU5elbwJP/BAUfgw=",
         "owner": "johnbarney",
         "repo": "nixos-config",
-        "rev": "b2f53f4016bcbe544f4afc1b8ec982aa58e95e94",
+        "rev": "63aae436e9907217548c38ac97f5af1c626de332",
         "type": "github"
       },
       "original": {

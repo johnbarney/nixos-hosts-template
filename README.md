@@ -13,6 +13,7 @@ configuration, and private machine choices in a private copy.
 ## Layout
 
 - `flake.nix` defines example host outputs using `dendritic.lib.mkDendriticHost`.
+- `flake.nix` also defines an installer ISO package using `dendritic.nixosModules.installer`.
 - `hosts/example-desktop/` shows the host-local NixOS module shape.
 - `home/alice/` shows the host repo side of Home Manager state.
 - `Makefile` provides common check, rebuild, lock-update, and post-install
@@ -33,6 +34,25 @@ configuration, and private machine choices in a private copy.
 
 Generated `hardware-configuration.nix` files are expected in private host repos.
 Keep this public template sanitized.
+
+## Installer ISO
+
+Build the installer from the hosts repo so the install workflow belongs next to
+the host definitions:
+
+```sh
+make build-iso
+make iso-path
+```
+
+The ISO is copied to `./result/iso/*.iso`. It provides `install-nixos-host`,
+which installs from a hosts flake at `/mnt/etc/nixos` or copies one from a local
+path:
+
+```sh
+sudo install-nixos-host <host>
+sudo install-nixos-host <host> /path/to/hosts-repo
+```
 
 ## Add Another Host
 
