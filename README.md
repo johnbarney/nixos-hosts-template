@@ -24,6 +24,14 @@ configuration, and private machine choices in a private copy.
 NVIDIA-specific settings. `example-nvidia` uses
 `dendritic.nixosModules.desktop-nvidia`.
 
+CPU microcode is host-specific. Add one of these to a host's `extraModules`
+when needed:
+
+```nix
+extraModules = [ inputs.dendritic.nixosModules.cpu-amd ];
+extraModules = [ inputs.dendritic.nixosModules.cpu-intel ];
+```
+
 ## First Use
 
 1. Fork or copy this repo into a private hosts repo.
