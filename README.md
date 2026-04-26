@@ -14,10 +14,15 @@ configuration, and private machine choices in a private copy.
 
 - `flake.nix` defines example host outputs using `dendritic.lib.mkDendriticHost`.
 - `flake.nix` also defines an installer ISO package using `dendritic.nixosModules.installer`.
-- `hosts/example-desktop/` shows the host-local NixOS module shape.
+- `hosts/example-desktop/` shows a generic desktop host.
+- `hosts/example-nvidia/` shows a desktop host using NVIDIA settings.
 - `home/alice/` shows the host repo side of Home Manager state.
 - `Makefile` provides common check, rebuild, lock-update, and post-install
   migration commands.
+
+`example-desktop` uses `dendritic.nixosModules.desktop`, which has no
+NVIDIA-specific settings. `example-nvidia` uses
+`dendritic.nixosModules.desktop-nvidia`.
 
 ## First Use
 
@@ -56,7 +61,7 @@ sudo install-nixos-host <host> /path/to/hosts-repo
 
 ## Add Another Host
 
-1. Copy `hosts/example-desktop` to `hosts/<new-host>`.
+1. Copy `hosts/example-desktop` or `hosts/example-nvidia` to `hosts/<new-host>`.
 2. Add another `nixosConfigurations.<new-host>` entry in `flake.nix`.
 3. Set `hostname`, `username`, `hostModule`, and `homeModule` for that host.
 4. Generate the real hardware config on the target machine.

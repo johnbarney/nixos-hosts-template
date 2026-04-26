@@ -29,6 +29,14 @@
           username = "alice";
           hostModule = ./hosts/example-desktop;
           homeModule = ./home/alice/home.nix;
+          profile = inputs.dendritic.nixosModules.desktop;
+        };
+
+        example-nvidia = inputs.dendritic.lib.mkDendriticHost {
+          hostname = "example-nvidia";
+          username = "alice";
+          hostModule = ./hosts/example-nvidia;
+          homeModule = ./home/alice/home.nix;
           profile = inputs.dendritic.nixosModules.desktop-nvidia;
         };
 
