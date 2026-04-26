@@ -45,7 +45,7 @@ update-lock: ## Update flake inputs
 	nix flake update
 
 update-base: ## Update dendritic public base input only
-	nix flake lock --update-input dendritic
+	nix flake update dendritic
 
 post-install-backup: ## Backup /etc/nixos to /etc/nixos.bak (uses sudo)
 	sudo mv $(ETC_NIXOS) $(BACKUP_DIR)
