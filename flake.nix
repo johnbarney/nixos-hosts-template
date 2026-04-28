@@ -20,7 +20,7 @@
         networking
         audioPipewire
         desktopServices
-        desktopKde
+        desktopKdeFull
         displaySddm
         flatpak
         fonts
@@ -28,8 +28,11 @@
       ];
 
       commonUserSoftware = with catalog.userSoftware; [
+        chromium
+        heroic
         onepassword
         steam
+        vscode
       ];
 
       installerSystem = inputs.nixpkgs.lib.nixosSystem {

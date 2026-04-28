@@ -32,7 +32,7 @@ systemSoftware = with inputs.dendritic.lib.moduleCatalog.systemSoftware; [
   networking
   audioPipewire
   desktopServices
-  desktopKde
+  desktopKdeFull
   displaySddm
   flatpak
   fonts
@@ -40,8 +40,11 @@ systemSoftware = with inputs.dendritic.lib.moduleCatalog.systemSoftware; [
 ];
 
 userSoftware = with inputs.dendritic.lib.moduleCatalog.userSoftware; [
+  chromium
+  heroic
   onepassword
   steam
+  vscode
 ];
 ```
 
