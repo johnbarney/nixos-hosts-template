@@ -6,7 +6,7 @@ Thin host flake that consumes the public `dendritic` base:
 nixos-hosts-template -> github:johnbarney/nixos-config
 ```
 
-Use this as a public reference template. Keep reusable modules, profiles, and
+Use this as a public reference template. Keep reusable modules and
 installer code in the public base. Keep real host identity, generated hardware
 configuration, and private machine choices in a private copy.
 
@@ -15,22 +15,38 @@ configuration, and private machine choices in a private copy.
 - `flake.nix` defines example host outputs using `dendritic.lib.mkDendriticHost`.
 - `flake.nix` also defines an installer ISO package using `dendritic.nixosModules.installer`.
 - `hosts/example-desktop/` shows a generic desktop host.
-- `hosts/example-nvidia/` shows a desktop host using NVIDIA settings.
+- `hosts/example-nvidia/` shows a desktop host using NVIDIA hardware support.
 - `home/alice/` shows the host repo side of Home Manager state.
 - `Makefile` provides common check, rebuild, lock-update, and post-install
   migration commands.
 
-`example-desktop` uses `dendritic.nixosModules.desktop`, which has no
-NVIDIA-specific settings. `example-nvidia` uses
-`dendritic.nixosModules.desktop-nvidia`.
-
-CPU microcode is host-specific. Add one of these to a host's `extraModules`
-when needed:
+Hosts are assembled from three explicit menus exported by the base:
 
 ```nix
-extraModules = [ inputs.dendritic.nixosModules.cpu-amd ];
-extraModules = [ inputs.dendritic.nixosModules.cpu-intel ];
+hardware = with inputs.dendritic.lib.moduleCatalog.hardware; [
+  cpuAmd
+];
+
+systemSoftware = with inputs.dendritic.lib.moduleCatalog.systemSoftware; [
+  base
+  networking
+  audioPipewire
+  desktopServices
+  desktopKde
+  displaySddm
+  flatpak
+  fonts
+  wallpaper
+];
+
+userSoftware = with inputs.dendritic.lib.moduleCatalog.userSoftware; [
+  onepassword
+  steam
+];
 ```
+
+`example-desktop` uses the common desktop menu without NVIDIA. `example-nvidia`
+adds `nvidia` to its hardware menu.
 
 ## First Use
 
@@ -93,5 +109,5 @@ git fetch upstream
 git merge upstream/main
 ```
 
-Template updates are occasional structure/docs changes. Normal NixOS module and
-profile updates should come through the `dendritic` flake input instead.
+Template updates are occasional structure/docs changes. Normal NixOS module
+updates should come through the `dendritic` flake input instead.

@@ -13,6 +13,24 @@
   outputs = inputs:
     let
       system = "x86_64-linux";
+      catalog = inputs.dendritic.lib.moduleCatalog;
+
+      commonSystemSoftware = with catalog.systemSoftware; [
+        base
+        networking
+        audioPipewire
+        desktopServices
+        desktopKde
+        displaySddm
+        flatpak
+        fonts
+        wallpaper
+      ];
+
+      commonUserSoftware = with catalog.userSoftware; [
+        onepassword
+        steam
+      ];
 
       installerSystem = inputs.nixpkgs.lib.nixosSystem {
         inherit system;
@@ -29,7 +47,11 @@
           username = "alice";
           hostModule = ./hosts/example-desktop;
           homeModule = ./home/alice/home.nix;
-          profile = inputs.dendritic.nixosModules.desktop;
+          hardware = with catalog.hardware; [
+            cpuAmd
+          ];
+          systemSoftware = commonSystemSoftware;
+          userSoftware = commonUserSoftware;
         };
 
         example-nvidia = inputs.dendritic.lib.mkDendriticHost {
@@ -37,7 +59,12 @@
           username = "alice";
           hostModule = ./hosts/example-nvidia;
           homeModule = ./home/alice/home.nix;
-          profile = inputs.dendritic.nixosModules.desktop-nvidia;
+          hardware = with catalog.hardware; [
+            cpuIntel
+            nvidia
+          ];
+          systemSoftware = commonSystemSoftware;
+          userSoftware = commonUserSoftware;
         };
 
         installer = installerSystem;

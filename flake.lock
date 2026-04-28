@@ -11,11 +11,11 @@
         "plasma-manager": "plasma-manager"
       },
       "locked": {
-        "lastModified": 1777222835,
-        "narHash": "sha256-QUUJF0tX1rvljuMkntwPfMhYpTQ1gBP4QMivJlzoito=",
+        "lastModified": 1777348015,
+        "narHash": "sha256-4hpgRRT4wbvhqxI/QIGbojXrbNReiELSzgiK2JC+XRM=",
         "owner": "johnbarney",
         "repo": "nixos-config",
-        "rev": "8bb47f17297bd1d2f9c8c7e0ac079b4ed3ed1d9b",
+        "rev": "5a3cfc4087b5632de27e89f814652bf4091410b9",
         "type": "github"
       },
       "original": {
@@ -50,11 +50,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777151655,
-        "narHash": "sha256-Th3a5OZyEy4kCoyLfefnt+2dwRIrFQqYgMsayF9qzFw=",
+        "lastModified": 1777308348,
+        "narHash": "sha256-DJx9wnerjsOqKOo8I7/u5ENRhRWFF2mbYcACF+mn5LU=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "6f59831b23d03bbf4fbd13ad167ae25da294cc14",
+        "rev": "a28e848a01044f47679453aae75f6253bef7903e",
         "type": "github"
       },
       "original": {
