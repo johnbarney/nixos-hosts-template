@@ -20,7 +20,7 @@ configuration, and private machine choices in a private copy.
 - `Makefile` provides common check, rebuild, lock-update, and post-install
   migration commands.
 
-Hosts are assembled from three explicit menus exported by the base:
+Hosts are assembled from four explicit menus exported by the base:
 
 ```nix
 hardware = with inputs.dendritic.lib.moduleCatalog.hardware; [
@@ -45,6 +45,16 @@ userSoftware = with inputs.dendritic.lib.moduleCatalog.userSoftware; [
   onepassword
   steam
   vscode
+];
+
+homeSoftware = with inputs.dendritic.lib.moduleCatalog.homeSoftware; [
+  base
+  shellZsh
+  sshOnepasswordAgent
+  vscode
+  terminalKitty
+  themeBreezeDark
+  plasmaBreezeDark
 ];
 ```
 

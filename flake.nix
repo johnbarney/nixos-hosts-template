@@ -35,6 +35,16 @@
         vscode
       ];
 
+      commonHomeSoftware = with catalog.homeSoftware; [
+        base
+        shellZsh
+        sshOnepasswordAgent
+        vscode
+        terminalKitty
+        themeBreezeDark
+        plasmaBreezeDark
+      ];
+
       installerSystem = inputs.nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
@@ -55,6 +65,7 @@
           ];
           systemSoftware = commonSystemSoftware;
           userSoftware = commonUserSoftware;
+          homeSoftware = commonHomeSoftware;
         };
 
         example-nvidia = inputs.dendritic.lib.mkDendriticHost {
@@ -68,6 +79,7 @@
           ];
           systemSoftware = commonSystemSoftware;
           userSoftware = commonUserSoftware;
+          homeSoftware = commonHomeSoftware;
         };
 
         installer = installerSystem;
