@@ -14,9 +14,11 @@ configuration, and private machine choices in a private copy.
 
 - `flake.nix` defines example host outputs using `dendritic.lib.mkDendriticHost`.
 - `flake.nix` also defines an installer ISO package using `dendritic.nixosModules.installer`.
-- `hosts/example-desktop/` shows a generic desktop host.
-- `hosts/example-nvidia/` shows a desktop host using NVIDIA hardware support.
-- `home/alice/` shows the host repo side of Home Manager state.
+- `hosts/example-kde/` shows a KDE host using AMD CPU and AMD graphics support.
+- `hosts/example-kde-nvidia/` shows a KDE host using Intel CPU and NVIDIA graphics support.
+- `hosts/example-gnome/` shows a GNOME host using AMD CPU and AMD graphics support.
+- `home/alice/` shows the host repo side of Home Manager state for KDE examples.
+- `home/bob/` shows the host repo side of Home Manager state for the GNOME example.
 - `Makefile` provides common check, rebuild, lock-update, and post-install
   migration commands.
 
@@ -25,6 +27,7 @@ Hosts are assembled from four explicit menus exported by the base:
 ```nix
 hardware = with inputs.dendritic.lib.moduleCatalog.hardware; [
   cpuAmd
+  graphicsAmd
 ];
 
 systemSoftware = with inputs.dendritic.lib.moduleCatalog.systemSoftware; [
@@ -41,6 +44,7 @@ systemSoftware = with inputs.dendritic.lib.moduleCatalog.systemSoftware; [
 
 userSoftware = with inputs.dendritic.lib.moduleCatalog.userSoftware; [
   chromium
+  devCli
   heroic
   onepassword
   steam
@@ -49,22 +53,24 @@ userSoftware = with inputs.dendritic.lib.moduleCatalog.userSoftware; [
 
 homeSoftware = with inputs.dendritic.lib.moduleCatalog.homeSoftware; [
   base
+  git
   shellZsh
   sshOnepasswordAgent
   vscode
   terminalKitty
-  themeBreezeDark
+  gtkQtBreezeDark
   plasmaBreezeDark
 ];
 ```
 
-`example-desktop` uses the common desktop menu without NVIDIA. `example-nvidia`
-adds `nvidia` to its hardware menu.
+`example-kde` uses the KDE and SDDM menus. `example-kde-nvidia` swaps in
+NVIDIA graphics. `example-gnome` demonstrates Bob using GNOME, GDM, and GNOME
+Home Manager theming.
 
 ## First Use
 
 1. Fork or copy this repo into a private hosts repo.
-2. Rename `example-desktop` and `alice` to match your machine and user.
+2. Rename an example host and user to match your machine and account.
 3. Generate or copy the real hardware config into
    `hosts/<host>/hardware-configuration.nix`.
 4. Validate, then build or switch the host:
@@ -98,7 +104,7 @@ sudo install-nixos-host <host> /path/to/hosts-repo
 
 ## Add Another Host
 
-1. Copy `hosts/example-desktop` or `hosts/example-nvidia` to `hosts/<new-host>`.
+1. Copy one of the `hosts/example-*` directories to `hosts/<new-host>`.
 2. Add another `nixosConfigurations.<new-host>` entry in `flake.nix`.
 3. Set `hostname`, `username`, `hostModule`, and `homeModule` for that host.
 4. Generate the real hardware config on the target machine.

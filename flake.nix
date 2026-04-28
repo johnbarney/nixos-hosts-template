@@ -20,29 +20,56 @@
         networking
         audioPipewire
         desktopServices
-        desktopKdeFull
-        displaySddm
         flatpak
         fonts
         wallpaper
       ];
 
-      commonUserSoftware = with catalog.userSoftware; [
+      kdeSystemSoftware = with catalog.systemSoftware; commonSystemSoftware ++ [
+        desktopKdeFull
+        displaySddm
+      ];
+
+      gnomeSystemSoftware = with catalog.systemSoftware; commonSystemSoftware ++ [
+        desktopGnomeFull
+        displayGdm
+      ];
+
+      kdeUserSoftware = with catalog.userSoftware; [
         chromium
+        devCli
         heroic
         onepassword
         steam
         vscode
       ];
 
-      commonHomeSoftware = with catalog.homeSoftware; [
+      gnomeUserSoftware = with catalog.userSoftware; [
+        chromium
+        devCli
+        vscode
+      ];
+
+      aliceHomeSoftware = with catalog.homeSoftware; [
         base
+        git
         shellZsh
         sshOnepasswordAgent
         vscode
         terminalKitty
-        themeBreezeDark
+        gtkQtBreezeDark
         plasmaBreezeDark
+      ];
+
+      bobHomeSoftware = with catalog.homeSoftware; [
+        base
+        git
+        shellZsh
+        ssh
+        vscode
+        terminalKitty
+        gtkQtBreezeDark
+        gnomeBreezeDark
       ];
 
       installerSystem = inputs.nixpkgs.lib.nixosSystem {
@@ -55,31 +82,46 @@
     in
     {
       nixosConfigurations = {
-        example-desktop = inputs.dendritic.lib.mkDendriticHost {
-          hostname = "example-desktop";
+        example-kde = inputs.dendritic.lib.mkDendriticHost {
+          hostname = "example-kde";
           username = "alice";
-          hostModule = ./hosts/example-desktop;
+          hostModule = ./hosts/example-kde;
           homeModule = ./home/alice/home.nix;
           hardware = with catalog.hardware; [
             cpuAmd
+            graphicsAmd
           ];
-          systemSoftware = commonSystemSoftware;
-          userSoftware = commonUserSoftware;
-          homeSoftware = commonHomeSoftware;
+          systemSoftware = kdeSystemSoftware;
+          userSoftware = kdeUserSoftware;
+          homeSoftware = aliceHomeSoftware;
         };
 
-        example-nvidia = inputs.dendritic.lib.mkDendriticHost {
-          hostname = "example-nvidia";
+        example-kde-nvidia = inputs.dendritic.lib.mkDendriticHost {
+          hostname = "example-kde-nvidia";
           username = "alice";
-          hostModule = ./hosts/example-nvidia;
+          hostModule = ./hosts/example-kde-nvidia;
           homeModule = ./home/alice/home.nix;
           hardware = with catalog.hardware; [
             cpuIntel
-            nvidia
+            graphicsNvidia
           ];
-          systemSoftware = commonSystemSoftware;
-          userSoftware = commonUserSoftware;
-          homeSoftware = commonHomeSoftware;
+          systemSoftware = kdeSystemSoftware;
+          userSoftware = kdeUserSoftware;
+          homeSoftware = aliceHomeSoftware;
+        };
+
+        example-gnome = inputs.dendritic.lib.mkDendriticHost {
+          hostname = "example-gnome";
+          username = "bob";
+          hostModule = ./hosts/example-gnome;
+          homeModule = ./home/bob/home.nix;
+          hardware = with catalog.hardware; [
+            cpuAmd
+            graphicsAmd
+          ];
+          systemSoftware = gnomeSystemSoftware;
+          userSoftware = gnomeUserSoftware;
+          homeSoftware = bobHomeSoftware;
         };
 
         installer = installerSystem;

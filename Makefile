@@ -2,7 +2,7 @@ SHELL := /usr/bin/env bash
 
 HOST ?= $(shell (hostnamectl --static 2>/dev/null || hostname -s 2>/dev/null || true) | tr -d '\n')
 ifeq ($(strip $(HOST)),)
-HOST := example-desktop
+HOST := example-kde
 endif
 ISO_PACKAGE ?= installer-iso
 ISO_OUTPUT_DIR ?= ./result/iso
