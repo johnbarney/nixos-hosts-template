@@ -35,37 +35,59 @@ systemSoftware = with inputs.dendritic.lib.moduleCatalog.systemSoftware; [
   networking
   audioPipewire
   desktopServices
-  desktopKdeFull
   displaySddm
   flatpak
-  fonts
   wallpaper
 ];
 
 userSoftware = with inputs.dendritic.lib.moduleCatalog.userSoftware; [
-  chromium
-  devCli
-  heroic
-  onepassword
   steam
-  vscode
 ];
 
 homeSoftware = with inputs.dendritic.lib.moduleCatalog.homeSoftware; [
   base
-  git
-  shellZsh
-  sshOnepasswordAgent
-  vscode
   terminalKitty
-  gtkQtBreezeDark
-  plasmaBreezeDark
+];
+
+metaModules = with inputs.dendritic.lib.moduleCatalog.metaModules; [
+  kde
+  onepassword
 ];
 ```
 
-`example-kde` uses the KDE and SDDM menus. `example-kde-nvidia` swaps in
-NVIDIA graphics. `example-gnome` demonstrates Bob using GNOME, GDM, and GNOME
-Home Manager theming.
+`example-kde` uses Alice with KDE, SDDM, Chromium as the default browser, Steam,
+and 1Password SSH integration. `example-kde-nvidia` swaps in NVIDIA graphics.
+`example-gnome` demonstrates Bob using GNOME, GDM, Firefox as the default
+browser, and GNOME Home Manager theming.
+
+## Add Software Outside the Catalog
+
+The catalog is a curated starter API, not a wrapper around every package in
+nixpkgs. Add ordinary software directly in your host or home module.
+
+For a system-wide package, put it in a host module such as
+`hosts/example-kde/default.nix`:
+
+```nix
+{ pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    git
+  ];
+}
+```
+
+For a per-user package, put it in a Home Manager module such as
+`home/alice/home.nix`:
+
+```nix
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    git
+  ];
+}
+```
 
 ## First Use
 

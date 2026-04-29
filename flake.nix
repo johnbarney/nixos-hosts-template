@@ -21,55 +21,32 @@
         audioPipewire
         desktopServices
         flatpak
-        fonts
         wallpaper
       ];
 
       kdeSystemSoftware = with catalog.systemSoftware; commonSystemSoftware ++ [
-        desktopKdeFull
         displaySddm
       ];
 
       gnomeSystemSoftware = with catalog.systemSoftware; commonSystemSoftware ++ [
-        desktopGnomeFull
         displayGdm
       ];
 
       kdeUserSoftware = with catalog.userSoftware; [
-        chromium
-        devCli
-        heroic
-        onepassword
         steam
-        vscode
       ];
 
-      gnomeUserSoftware = with catalog.userSoftware; [
-        chromium
-        devCli
-        vscode
-      ];
+      gnomeUserSoftware = [ ];
 
       aliceHomeSoftware = with catalog.homeSoftware; [
         base
-        git
-        shellZsh
-        sshOnepasswordAgent
-        vscode
         terminalKitty
-        gtkQtBreezeDark
-        plasmaBreezeDark
       ];
 
       bobHomeSoftware = with catalog.homeSoftware; [
         base
-        git
-        shellZsh
         ssh
-        vscode
         terminalKitty
-        gtkQtBreezeDark
-        gnomeBreezeDark
       ];
 
       installerSystem = inputs.nixpkgs.lib.nixosSystem {
@@ -87,6 +64,10 @@
           username = "alice";
           hostModule = ./hosts/example-kde;
           homeModule = ./home/alice/home.nix;
+          metaModules = with catalog.metaModules; [
+            kde
+            onepassword
+          ];
           hardware = with catalog.hardware; [
             cpuAmd
             graphicsAmd
@@ -101,6 +82,10 @@
           username = "alice";
           hostModule = ./hosts/example-kde-nvidia;
           homeModule = ./home/alice/home.nix;
+          metaModules = with catalog.metaModules; [
+            kde
+            onepassword
+          ];
           hardware = with catalog.hardware; [
             cpuIntel
             graphicsNvidia
@@ -115,6 +100,9 @@
           username = "bob";
           hostModule = ./hosts/example-gnome;
           homeModule = ./home/bob/home.nix;
+          metaModules = with catalog.metaModules; [
+            gnome
+          ];
           hardware = with catalog.hardware; [
             cpuAmd
             graphicsAmd
